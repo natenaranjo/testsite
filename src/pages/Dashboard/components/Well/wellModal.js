@@ -46,6 +46,7 @@ const WellModal = (props) => {
     try {
       const id = await db.wells.add({
         wname: inputs.wname,
+        wvs: inputs.wvs,
         wstb: inputs.wstb,
         wdls: inputs.wdls,
         wns: inputs.wns,
@@ -98,10 +99,13 @@ const WellModal = (props) => {
                 Well Information
               </Typography>
               <Grid container spacing={2} style={style.formGrid}>
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <TextField id='standard-basic' label='Well Name' name='wname' value={inputs.wname || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={4}>
+                  <TextField id='standard-basic' label='VS of Well' name='wvs' value={inputs.wvs || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                </Grid>
+                <Grid item xs={2}>
                   <TextField id='standard-basic' label='Sensor to Bit' name='wstb' value={inputs.wstb || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
               </Grid>

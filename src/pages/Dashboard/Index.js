@@ -59,24 +59,6 @@ export default function Dashboard() {
                 </ListItemButton>
               </Link>
             </ListItem>
-            <ListItem disablePadding>
-              <Link to='/survey' relative='path' style={{  width: '100%', textDecoration: 'none', color: 'black' }}>
-                <ListItemButton>
-                  <ListItemIcon><AssessmentOutlined /></ListItemIcon>
-                  <ListItemText primary="Surveys">
-                  </ListItemText>
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            <ListItem disablePadding>
-              <Link to='/slide' relative='path' style={{  width: '100%', textDecoration: 'none', color: 'black' }}>
-                <ListItemButton>
-                  <ListItemIcon><ShortText /></ListItemIcon>
-                  <ListItemText primary="Slides">
-                  </ListItemText>
-                </ListItemButton>
-              </Link>
-            </ListItem>
           </List>
         </Box>
       </Drawer>
@@ -84,8 +66,8 @@ export default function Dashboard() {
         <Toolbar />
         <Routes>
           <Route path='/well' element={<Well />} />
-          <Route path='/slide' element={<Slide />} />
-          <Route path='/survey' element={<Survey />} />
+          <Route path='/well/:wellId/survey' element={<Survey />} />
+          <Route path='/well/:wellId/survey/slide' element={<Slide />} />
         </Routes>
       </Box>
     </Box>
