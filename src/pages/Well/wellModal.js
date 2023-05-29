@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import React, { useState } from 'react';
-import {db} from '../../../../context/db/db';
+import {db} from '../../context/db/db';
 import { Box, Button, Divider, FormControl, Grid, Modal, TextField, Typography } from '@mui/material';
 
 const style = {

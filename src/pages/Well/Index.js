@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Button, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
 import WellModal from './wellModal';
-import { db } from '../../../../context/db/db';
+import { db } from '../../context/db/db';
 import { useLiveQuery } from 'dexie-react-hooks';
 
 const Well = () => {
@@ -49,7 +49,7 @@ const Well = () => {
                   <Divider />
                   <Grid container spacing={4} style={{ paddingTop: 10 }}>
                     <Grid item xs={8}>
-                      <Link to={`/well/${well.id}/survey`}>
+                      <Link to={`/well/${well.id}/surveys`}>
                         <Button variant='text'>Surveys</Button>
                       </Link>
                     </Grid>

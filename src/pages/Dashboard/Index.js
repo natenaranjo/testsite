@@ -2,15 +2,12 @@ import * as React from 'react';
 import {Routes, Route, Link} from 'react-router-dom';
 import { AppBar, Box, CssBaseline, Divider, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
-import ShortText from '@mui/icons-material/ShortText';
-import AssessmentOutlined from '@mui/icons-material/AssessmentOutlined';
 
+import Well from '../Well/Index';
+import Slide from '../Slide/Index';
+import Survey from '../Survey/Index'
 
-import Well from './components/Well/Index';
-import Slide from './components/Slide/Index';
-import Survey from './components/Survey/Index'
-
-const drawerWidth = 240;
+const drawerWidth = 175;
 
 export default function Dashboard() {
   return (
@@ -66,8 +63,8 @@ export default function Dashboard() {
         <Toolbar />
         <Routes>
           <Route path='/well' element={<Well />} />
-          <Route path='/well/:wellId/survey' element={<Survey />} />
-          <Route path='/well/:wellId/survey/slide' element={<Slide />} />
+          <Route path='/well/:wellId/surveys' element={<Survey />} />
+          <Route path='/well/:wellId/surveys/slides' element={<Slide />} />
         </Routes>
       </Box>
     </Box>
