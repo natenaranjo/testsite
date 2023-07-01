@@ -1,4 +1,4 @@
-import { db } from "./db";
+import { db } from "../../store/db";
 import { createSlice } from '@reduxjs/toolkit';
 
 export const tyendsSlice = createSlice({

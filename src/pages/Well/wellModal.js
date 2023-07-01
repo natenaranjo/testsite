@@ -1,7 +1,4 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-import React, { useState } from 'react';
-import {db} from '../../context/db/db';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Divider, FormControl, Grid, Modal, TextField, Typography } from '@mui/material';
 
 const style = {
@@ -32,56 +29,53 @@ const style = {
     width: '100%',
     display: 'flex',
     justifyContent: 'end',
+    gap: 8,
   },
   formButton: {
-    marginTop: 10,
-    width: 200,
+    marginTop: 20,
+    width: 150,
   }
 };
 
-const WellModal = (props) => {
-  const [inputs, setInputs] = useState({});
+const WellModalB = (props) => {
+  const [data, setData] = useState({});
 
-  async function addWell() {
-    try {
-      const id = await db.wells.add({
-        wname: inputs.wname,
-        wvs: inputs.wvs,
-        wstb: inputs.wstb,
-        wdls: inputs.wdls,
-        wns: inputs.wns,
-        wew: inputs.wew,
-        tmd: inputs.tmd,
-        tinc: inputs.tinc,
-        tazi: inputs.tazi,
-        ttvd: inputs.ttvd,
-        tns: inputs.tns,
-        tew: inputs.tew,
-        tvs: inputs.tvs,
-        trad: inputs.trad
-      })
-      props.close();
-    } catch(e) {
-      console.error(e);
+ useEffect(() => {
+    if (props.initialData !== undefined){
+      setData(props.initialData)
     }
+ },[props.initialData])
 
-    setInputs({});
+  const handleDelete = (data) => {
+    props.delete(data);
+    handleReset();
   }
 
   const handleChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setInputs(values => ({ ...values, [name]: value }));
+    setData(values =>({ ...values, [name]: value }));
+  };
+
+  const handleUpdate = () => {
+    props.onUpdate(data);
+    handleReset();
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('inputs: ', inputs);
+  const handleSubmit = () => {
+    props.onData(data);
+    handleReset();
+  }
+
+  const handleReset = () => {
+    props.close();
+    setData({})
   }
 
   return (
       <Modal
         open={props.open}
+        onClose={handleReset}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -90,34 +84,34 @@ const WellModal = (props) => {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               New Well Information
             </Typography>
-            <Button variant='link' onClick={props.close} style={{ fontSize: '1rem', fontWeight: 'bold' }}>X</Button>
+            <Button variant='link' onClick={handleReset} style={{ fontSize: '1rem', fontWeight: 'bold' }}>X</Button>
           </Box>
           <Divider />
           <Box>
-            <FormControl onSubmit={handleSubmit} style={ style.form }>
+            <FormControl style={ style.form }>
               <Typography variant='h6' component='h6' style={ style.formTitle }>
                 Well Information
               </Typography>
               <Grid container spacing={2} style={style.formGrid}>
                 <Grid item xs={6}>
-                  <TextField id='standard-basic' label='Well Name' name='wname' value={inputs.wname || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='Well Name' name='wname' value={data.wname || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={4}>
-                  <TextField id='standard-basic' label='VS of Well' name='wvs' value={inputs.wvs || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='VS of Well' name='wvs' value={data.wvs || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={2}>
-                  <TextField id='standard-basic' label='Sensor to Bit' name='wstb' value={inputs.wstb || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='Sensor to Bit' name='wstb' value={data.wstb || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
               </Grid>
               <Grid container spacing={2} style={style.formGrid}>
                 <Grid item xs={4}>
-                  <TextField id='standard-basic' label='DLS Reference Length' name='wdls' value={inputs.wdls || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='DLS Reference Length' name='wdls' value={data.wdls || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={4}>
-                  <TextField id='standard-basic' label='Wellhead N/S Offset Pad' name='wns' value={inputs.wns || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='Wellhead N/S Offset Pad' name='wns' value={data.wns || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={4}>
-                  <TextField id='standard-basic' label='Wellhead E/W Offset Pad' name='wew' value={inputs.wew || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='Wellhead E/W Offset Pad' name='wew' value={data.wew || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
               </Grid>
               <Typography variant='h6' component='h6' style={ style.formTitle }>
@@ -125,40 +119,46 @@ const WellModal = (props) => {
               </Typography>
               <Grid container spacing={2} style={style.formGrid}>
                 <Grid item xs={3}>
-                  <TextField id='standard-basic' label='MD' name='tmd' value={inputs.tmd || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='MD' name='tmd' value={data.tmd || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField id='standard-basic' label='INC' name='tinc' value={inputs.tinc || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='INC' name='tinc' value={data.tinc || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField id='standard-basic' label='AZI' name='tazi' value={inputs.tazi || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='AZI' name='tazi' value={data.tazi || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField id='standard-basic' label='TVD' name='ttvd' value={inputs.ttvd || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='TVD' name='ttvd' value={data.ttvd || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
               </Grid>
               <Grid container spacing={2} style={style.formGrid}>
                 <Grid item xs={3}>
-                  <TextField id='standard-basic' label='LAT N/S' name='tns' value={inputs.tns || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='LAT N/S' name='tns' value={data.tns || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField id='standard-basic' label='DEP E/W' name='tew' value={inputs.tew || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='DEP E/W' name='tew' value={data.tew || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField id='standard-basic' label='VS' name='tvs' value={inputs.tvs || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='VS' name='tvs' value={data.tvs || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
                 <Grid item xs={3}>
-                  <TextField id='standard-basic' label='Radius' name='trad' value={inputs.trad || ''} onChange={handleChange} variant='standard' style={style.formInput} />
+                  <TextField id='standard-basic' label='Radius' name='trad' value={data.trad || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
               </Grid>
-              <Grid container style={style.formFooter}>
-                <Button variant='contained' onClick={addWell} style={style.formButton}>Create Well</Button>
-              </Grid>
+              {!props.initialData
+                ? <Grid container style={style.formFooter}>
+                    <Button variant='contained' onClick={handleSubmit} style={style.formButton}>Create Well</Button>
+                  </Grid>
+                : <Grid container style={style.formFooter}>
+                    <Button variant='contained' onClick={handleDelete} color='error' style={style.formButton}>Delete Well</Button>
+                    <Button variant='contained' onClick={handleUpdate} style={style.formButton}>Update Well</Button>
+                  </Grid>
+              }
             </FormControl>
           </Box>
         </Box>
       </Modal>
   )
-}
+};
 
-export default WellModal;
+export default WellModalB;

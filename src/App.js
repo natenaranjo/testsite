@@ -1,14 +1,17 @@
 import React from 'react';
-import { createTheme } from '@mui/material';
+import { BrowserRouter } from 'react-router-dom';
+// import { createStore, applyMiddleware } from 'redux';
+// import { Provider } from 'react-redux';
+// import thunk from 'redux-thunk';
+// import wellReducer from './store/well/wellReducer';
+// import store from './store/store';
 import Dashboard from './pages/Dashboard/Index';
-
-const theme = createTheme({
-
-});
 
 function App() {
   return (
+    <BrowserRouter>
       <Dashboard />
+    </BrowserRouter>
   );
 }
 

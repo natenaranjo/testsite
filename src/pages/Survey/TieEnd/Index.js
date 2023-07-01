@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { add, update } from '../../../context/db/tyendSlice';
 import { Button, Stack, TextField, Typography } from '@mui/material';
-import { db } from '../../../context/db/db';
+import { db } from '../../../store/db';
 import { useLiveQuery } from 'dexie-react-hooks';
 
 const TieEnd = () => {
