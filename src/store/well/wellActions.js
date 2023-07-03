@@ -75,18 +75,17 @@ export const fetchWells = () => (dispatch) => {
   request.onsuccess = (event) => {
     const db = event.target.result;
     const transaction = db.transaction(['wells'], 'readonly');
-    const objectStore = transaction.objectStore('wells');
+    const wellStore = transaction.objectStore('wells');
 
-    const getAllRequest = objectStore.getAll();
+    const getAllRequest = wellStore.getAll();
 
     getAllRequest.onsuccess = () => {
       const wells = getAllRequest.result;
-      console.log('fetch: ', wells);
       dispatch(fetchWellsSuccess(wells));
     };
 
     getAllRequest.onerror = () => {
-      const error = request.error;
+      const error = getAllRequest.error;
       dispatch(fetchWellsFailure(error));
     };
   };
@@ -102,9 +101,9 @@ export const createWell = (well) => (dispatch) => {
   request.onsuccess = (event) => {
     const db = event.target.result;
     const transaction = db.transaction(['wells'], 'readwrite');
-    const objectStore = transaction.objectStore('wells');
+    const wellStore = transaction.objectStore('wells');
 
-    const addRequest = objectStore.add(well);
+    const addRequest = wellStore.add(well);
 
     addRequest.onsuccess = () => {
       dispatch(createWellSuccess());
@@ -114,22 +113,21 @@ export const createWell = (well) => (dispatch) => {
       dispatch(createWellFailure('Error creating well.'));
     };
   };
-
+  
   request.onerror = () => {
     dispatch(createWellFailure('Error opening database.'));
   };
 };
 
 export const updateWell = (well) => (dispatch) => {
-  console.log('Successfully hit updateWellRequest')
   const request = window.indexedDB.open('slideseen');
 
   request.onsuccess = (event) => {
     const db = event.target.result;
     const transaction = db.transaction(['wells'], 'readwrite');
-    const objectStore = transaction.objectStore('wells');
+    const wellStore = transaction.objectStore('wells');
 
-    const updateRequest = objectStore.put(well);
+    const updateRequest = wellStore.put(well);
 
     updateRequest.onsuccess = () => {
       dispatch(updateWellSuccess());
@@ -145,22 +143,81 @@ export const updateWell = (well) => (dispatch) => {
   };
 };
 
+// export const deleteWell = (id) => (dispatch) => {
+//   const request = window.indexedDB.open('slideseen');
+
+//   request.onsuccess = (event) => {
+//     const db = event.target.result;
+//     const transaction = db.transaction(['wells'], 'readwrite');
+//     const wellStore = transaction.objectStore('wells');
+
+//     const deleteRequest = wellStore.delete(id);
+
+//     deleteRequest.onsuccess = () => {
+//       dispatch(deleteWellSuccess());
+//     };
+
+//     deleteRequest.onerror = () => {
+//       dispatch(deleteWellFailure('Error deleting well.'));
+//     };
+//   };
+
+//   request.onerror = () => {
+//     dispatch(deleteWellFailure('Error opening database.'));
+//   };
+// };
+
 export const deleteWell = (id) => (dispatch) => {
   const request = window.indexedDB.open('slideseen');
 
   request.onsuccess = (event) => {
     const db = event.target.result;
-    const transaction = db.transaction(['wells'], 'readwrite');
-    const objectStore = transaction.objectStore('wells');
 
-    const deleteRequest = objectStore.delete(id);
+    // Start a transaction for deleting the well and related tables
+    const transaction = db.transaction(['wells', 'tyends'], 'readwrite');
+    const wellStore = transaction.objectStore('wells');
+    const tyendStore = transaction.objectStore('tyends');
 
-    deleteRequest.onsuccess = () => {
+    // Delete the well from the wells table
+    const deleteWellRequest = wellStore.delete(id);
+
+    // Delete the associated records from the tyends table
+    const deleteTyendsRequest = tyendStore.index('wellIdRef').openCursor(IDBKeyRange.only(id));
+
+    // Handle the success event for deleting the well
+    deleteWellRequest.onsuccess = () => {
       dispatch(deleteWellSuccess());
     };
 
-    deleteRequest.onerror = () => {
+    // Handle the error event for deleting the well
+    deleteWellRequest.onerror = () => {
       dispatch(deleteWellFailure('Error deleting well.'));
+    };
+
+    // Handle the success event for deleting the tyends
+    deleteTyendsRequest.onsuccess = (event) => {
+      const cursor = event.target.result;
+      if (cursor) {
+        // Delete the current record
+        cursor.delete();
+        // Move to the next record
+        cursor.continue();
+      }
+    };
+
+    // Handle the error event for deleting the tyends
+    deleteTyendsRequest.onerror = () => {
+      dispatch(deleteWellFailure('Error deleting related records.'));
+    };
+
+    // Commit the transaction
+    transaction.oncomplete = () => {
+      console.log('Transaction completed');
+    };
+
+    // Rollback the transaction if an error occurs
+    transaction.onerror = () => {
+      console.log('Transaction failed');
     };
   };
 

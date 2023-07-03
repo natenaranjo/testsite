@@ -1,16 +1,39 @@
-// import Dexie from 'dexie';
+export default function createStores() {
+  const request = window.indexedDB.open('slideseen', 1);
 
-// export const db = new Dexie('slideseen');
+  request.onupgradeneeded = (event) => {
+    const db = event.target.result;
 
-// db.version(1).stores({
-//   wells: '++id, wname, wstb, wdls, wns, wew, tmd, tinc, tazi, ttvd, tns, tew, tvs, trad',
-//   tends: 'wellId, tymd, tyinc, tyazi, tytvd, tyns, tyew, tyvs',
-// });
+    if (!db.objectStoreNames.contains('wells')) {
+      const wellStore = db.createObjectStore('wells', { keyPath: 'id', autoIncrement: true });
+        wellStore.createIndex('id', 'id', { unique: true });
+        wellStore.createIndex('wname', 'wname', { unique: false });
+        wellStore.createIndex('wvs', 'wvs', { unique: false });
+        wellStore.createIndex('wstb', 'wstb', { unique: false });
+        wellStore.createIndex('wdls', 'wdls', { unique: false });
+        wellStore.createIndex('wns', 'wns', { unique: false });
+        wellStore.createIndex('wew', 'wew', { unique: false });
+        wellStore.createIndex('tmd', 'tmd', { unique: false });
+        wellStore.createIndex('tinc', 'tinc', { unique: false });
+        wellStore.createIndex('tazi', 'tazi', { unique: false });
+        wellStore.createIndex('ttvd', 'ttvd', { unique: false });
+        wellStore.createIndex('tns', 'tns', { unique: false });
+        wellStore.createIndex('tew', 'tew', { unique: false });
+        wellStore.createIndex('tvs', 'tvs', { unique: false });
+        wellStore.createIndex('trad', 'trad', { unique: false });
+    }
 
-const request = window.indexedDB.open('slideseen', 10);
+    if (!db.objectStoreNames.contains('tyends')) {
+      const tyendStore = db.createObjectStore('tyends', { keyPath: 'wellId' });
+        tyendStore.createIndex('tymd', 'tymd', { unique: false });
+        tyendStore.createIndex('tyinc', 'tyinc', { unique: false });
+        tyendStore.createIndex('tyazi', 'tyazi', { unique: false });
+        tyendStore.createIndex('tytvd', 'tytvd', { unique: false });
+        tyendStore.createIndex('tyns', 'tyns', { unique: false });
+        tyendStore.createIndex('tyew', 'tyew', { unique: false });
+        tyendStore.createIndex('tyvs', 'tyvs', { unique: false });
 
-request.onupgradeneeded = (event) => {
-  const db = event.target.result;
-  const objectStore = db.createObjectStore('wells', { keyPath: 'id', autoIncrement: true });
-  // Add any additional object store configuration, such as indexes, if needed
-};
+        tyendStore.createIndex('wellIdRef', 'wellId', { unique: false });
+    }
+  }
+}

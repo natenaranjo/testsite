@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { fetchWells } from '../../store/well/wellActions';
 import { Link } from 'react-router-dom';
 import { Box, Button, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
 import WellModal from './wellModal';
-import { createWell, updateWell, deleteWell } from '../../store/well/wellActions'
+import { fetchWells, createWell, updateWell, deleteWell } from '../../store/well/wellActions'
 
 const Well = ({ wellData, error, loading, fetchWells, createWell, updateWell, deleteWell }) => {
-  const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState();
+  const [open, setOpen] = useState(false);
+
 
   useEffect(() => {
     fetchWells();
