@@ -24,7 +24,7 @@ const Tyend = ({ tyendData, error, fetchTyend, createTyend, updateTyend, resetTy
       window.removeEventListener('beforeunload', clearBeforeExit);
       resetTyendRequest();
     }
-  }, [fetchTyend]);
+  }, [fetchTyend, resetTyendRequest, wellId]);
 
   if(!wellid) {
     setWellid(wellId);

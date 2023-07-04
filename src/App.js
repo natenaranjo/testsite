@@ -1,16 +1,27 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-// import { createStore, applyMiddleware } from 'redux';
-// import { Provider } from 'react-redux';
-// import thunk from 'redux-thunk';
-// import wellReducer from './store/well/wellReducer';
-// import store from './store/store';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './pages/Layout';
+
 import Dashboard from './pages/Dashboard/Index';
+import Well from './pages/Well/Index';
+import Wells from './pages/Wells/Index';
+import Survey from './pages/Survey/Index';
+import Slide from './pages/Slide/Index';
+
 
 function App() {
+
   return (
     <BrowserRouter>
-      <Dashboard />
+      <Layout>
+        <Routes>
+          <Route path='/' element={<Layout />} />
+          <Route index element={<Dashboard />} />
+          <Route path='/wells' element={<Wells />} />
+          <Route path='/well/:wellId' element={<Well />} />
+          <Route path='/well/:wellId/slides' element={<Slide />} />
+          </Routes>
+      </Layout>
     </BrowserRouter>
   );
 }
