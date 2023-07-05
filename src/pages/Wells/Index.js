@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Box, Button, Card, CardContent, Divider, Grid, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, Divider, Grid, Link, Typography } from '@mui/material';
 import WellModal from './wellModal';
+// import WellForm from './WellForm';
 import { fetchWells, createWell, updateWell, deleteWell } from '../../store/well/wellActions'
+import { useTheme } from '@emotion/react';
 
 const Well = ({ wellData, error, loading, fetchWells, createWell, updateWell, deleteWell }) => {
+  const theme = useTheme();
   const [modalData, setModalData] = useState();
   const [open, setOpen] = useState(false);
 
@@ -44,9 +46,9 @@ const Well = ({ wellData, error, loading, fetchWells, createWell, updateWell, de
   };
 
   return (
-    <Box component='section' sx={{ flexGrow: 1, p: 3 }}>
+    <Box component='section' sx={{ height: '90%', flexGrow: 1, p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant='h2' noWrap component='h2'>Wells</Typography>
+        <Typography variant='h2' noWrap component='h2' color='primary'>Wells</Typography>
         <Button variant='contained' style={{ margin: '1rem' }} onClick={() => setOpen(true)}>New Well</Button>
       </Box>
       <Divider />
@@ -56,40 +58,29 @@ const Well = ({ wellData, error, loading, fetchWells, createWell, updateWell, de
             wellData.wells &&
               wellData.wells.map(well => 
               <Grid item key={well.id} xs={12} md={4} xl={2} style={{ padding: 10 }}>
-                <Link to={`/well/${well.id}`} relative='path'>
-                  <Card sx={{ maxWidth: 300, bgcolor: '#F8F8F7' }} key={well.id}>
+                <Button href={`/well/${well.id}`}>
+                  <Card sx={{ maxWidth: 500 }} key={well.id}>
                     <CardContent>
-                      <Typography variant='h6' component='h6' color='text.secondary' gutterBottom>
+                      <Typography variant='h5' component='h5' color='secondary' gutterBottom>
                         {well.wname}
                       </Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>VS of Well: {well.wvs}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>Sensor to Bit: {well.wstb}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>DLS Reference: {well.wdls}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>Wellhead N/S: {well.wns}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>wellhead E/W: {well.wew}</Typography>
-                      <Typography variant='h6' component='h6' color='text.secondary' gutterBottom>Target Information</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>MD: {well.tmd}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>INC: {well.tinc}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>AZI: {well.tazi}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>TVD: {well.ttvd}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>LAT N/S: {well.tns}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>DEP E/W: {well.tew}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>VS: {well.tvs}</Typography>
-                      <Typography variant='p' component='h5' color='text.secondary' gutterBottom>Radius: {well.trad}</Typography>
-                      <Divider />
-                      <Grid container spacing={4} style={{ paddingTop: 10 }}>
-                        <Grid item xs={8}>
-                          <Link to={`/well/${well.id}/surveys`}>
-                            <Button variant='text'>Surveys</Button>
-                          </Link>
-                        </Grid>
-                        <Grid item xs={4}>
-                          <Button variant='text' onClick={() => handleEdit(well)}>Edit</Button>
-                        </Grid>
-                      </Grid>
+                      <Typography variant='p' component='h5' gutterBottom>VS of Well: <span style={{ color: theme.palette.secondary.main }}>{well.wvs}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>Sensor to Bit: <span style={{ color: theme.palette.secondary.main }}>{well.wstb}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>DLS Reference: <span style={{ color: theme.palette.secondary.main }}>{well.wdls}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>Wellhead N/S: <span style={{ color: theme.palette.secondary.main }}>{well.wns}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>wellhead E/W: <span style={{ color: theme.palette.secondary.main }}>{well.wew}</span></Typography>
+                      <Typography variant='h6' component='h6' gutterBottom>Target Information</Typography>
+                      <Typography variant='p' component='h5' gutterBottom>MD: <span style={{ color: theme.palette.secondary.main }}>{well.tmd}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>INC: <span style={{ color: theme.palette.secondary.main }}>{well.tinc}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>AZI: <span style={{ color: theme.palette.secondary.main }}>{well.tazi}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>TVD: <span style={{ color: theme.palette.secondary.main }}>{well.ttvd}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>LAT N/S: <span style={{ color: theme.palette.secondary.main }}>{well.tns}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>DEP E/W: <span style={{ color: theme.palette.secondary.main }}>{well.tew}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>VS: <span style={{ color: theme.palette.secondary.main }}>{well.tvs}</span></Typography>
+                      <Typography variant='p' component='h5' gutterBottom>Radius: <span style={{ color: theme.palette.secondary.main }}>{well.trad}</span></Typography>
                     </CardContent>
                   </Card>
-                </Link>
+                </Button>
               </Grid>
               )
           }
@@ -104,6 +95,15 @@ const Well = ({ wellData, error, loading, fetchWells, createWell, updateWell, de
         onUpdate={handleUpdate}
         // onSubmit={handleSubmit}
       />
+      {/* <WellForm
+        open={open} 
+        delete={handleDelete}
+        close={handleClose}
+        initialData={modalData}
+        onData={handleModalData}
+        onUpdate={handleUpdate}
+        // onSubmit={handleSubmit}
+      /> */}
     </Box>
   )
 }

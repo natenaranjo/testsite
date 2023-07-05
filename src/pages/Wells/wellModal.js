@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Divider, FormControl, Grid, Modal, TextField, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Button, Divider, Link, Modal, Stack} from '@mui/material';
+import FormWellDetails from './FormWellDetails';
+import FormTyendDetails from './FormTyendDetails';
 
 const style = {
   position: 'absolute',
@@ -37,8 +39,17 @@ const style = {
   }
 };
 
+
 const WellModalB = (props) => {
   const [data, setData] = useState({});
+  const [wellData, setWellData] = useState();
+  const [tyendData, setTyendData] = useState();
+  const [step, setStep] = useState(1);
+  const breadcrumbs = [
+    <Link underline="hover" key="1" color={step === 1 ? 'text.primary' : 'text.disabled'} onClick={() => setStep(1)}>Well Information</Link>,
+    <Link underline="hover" key="2" color={step === 2 ? 'text.primary' : 'text.disabled'} onClick={() => setStep(2)}>Tie End Point</Link>,
+    <Link underline="hover" key="3" color={step === 3 ? 'text.primary' : 'text.disabled'} onClick={() => setStep(3)}>Confirmation</Link>,
+  ];
 
  useEffect(() => {
     if (props.initialData !== undefined){
@@ -46,20 +57,12 @@ const WellModalB = (props) => {
     }
  },[props.initialData])
 
-  const handleDelete = (data) => {
-    props.delete(data);
-    handleReset();
+  const handleWellData = (data) => {
+    setWellData(data);
   }
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData(values =>({ ...values, [name]: value }));
-  };
-
-  const handleUpdate = () => {
-    props.onUpdate(data);
-    handleReset();
+  const handleTyendData = (data) => {
+    setTyendData(data);
   }
 
   const handleSubmit = () => {
@@ -69,7 +72,57 @@ const WellModalB = (props) => {
 
   const handleReset = () => {
     props.close();
-    setData({})
+    setWellData();
+    setTyendData();
+    setStep(1);
+  }
+
+    // Go to next step on modal
+  const nextStep = (e) => {
+    e.preventDefault();
+    setStep(step + 1);
+  };
+
+  // Go back to prevous step on modal
+  const previousStep = (e) => {
+    e.preventDefault();
+    setStep(step - 1);
+  }
+
+  console.log('wellData: ', wellData);
+  console.log('tyendData: ', tyendData);
+
+  const renderForm = () => {
+    switch(step) {
+      case 1:
+        return (
+          <FormWellDetails 
+            nextStep={nextStep}
+            initialData={wellData}
+            onData={handleWellData}
+          />
+        );
+
+      case 2: 
+        return (
+          <FormTyendDetails
+            nextStep={nextStep}
+            previousStep={previousStep}
+            initialData={tyendData}
+            onData={handleTyendData}
+          />
+        );
+
+      case 3:
+        return (
+          <>
+            <h2>Step 3</h2>
+            <button onClick={previousStep}>Previous Step</button>
+          </>
+        );
+
+      default: break;
+    }
   }
 
   return (
@@ -78,83 +131,20 @@ const WellModalB = (props) => {
         onClose={handleReset}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        size="xl"
       >
         <Box sx={style}>
           <Box style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              New Well Information
-            </Typography>
+          <Stack spacing={2}>
+            <Breadcrumbs separator="›" aria-label="breadcrumb">
+              {breadcrumbs}
+            </Breadcrumbs>
+          </Stack>
             <Button variant='link' onClick={handleReset} style={{ fontSize: '1rem', fontWeight: 'bold' }}>X</Button>
           </Box>
           <Divider />
           <Box>
-            <FormControl style={ style.form }>
-              <Typography variant='h6' component='h6' style={ style.formTitle }>
-                Well Information
-              </Typography>
-              <Grid container spacing={2} style={style.formGrid}>
-                <Grid item xs={6}>
-                  <TextField id='standard-basic' label='Well Name' name='wname' value={data.wname || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField id='standard-basic' label='VS of Well' name='wvs' value={data.wvs || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-                <Grid item xs={2}>
-                  <TextField id='standard-basic' label='Sensor to Bit' name='wstb' value={data.wstb || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-              </Grid>
-              <Grid container spacing={2} style={style.formGrid}>
-                <Grid item xs={4}>
-                  <TextField id='standard-basic' label='DLS Reference Length' name='wdls' value={data.wdls || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField id='standard-basic' label='Wellhead N/S Offset Pad' name='wns' value={data.wns || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField id='standard-basic' label='Wellhead E/W Offset Pad' name='wew' value={data.wew || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-              </Grid>
-              <Typography variant='h6' component='h6' style={ style.formTitle }>
-                Target Information
-              </Typography>
-              <Grid container spacing={2} style={style.formGrid}>
-                <Grid item xs={3}>
-                  <TextField id='standard-basic' label='MD' name='tmd' value={data.tmd || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-                <Grid item xs={3}>
-                  <TextField id='standard-basic' label='INC' name='tinc' value={data.tinc || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-                <Grid item xs={3}>
-                  <TextField id='standard-basic' label='AZI' name='tazi' value={data.tazi || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-                <Grid item xs={3}>
-                  <TextField id='standard-basic' label='TVD' name='ttvd' value={data.ttvd || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-              </Grid>
-              <Grid container spacing={2} style={style.formGrid}>
-                <Grid item xs={3}>
-                  <TextField id='standard-basic' label='LAT N/S' name='tns' value={data.tns || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-                <Grid item xs={3}>
-                  <TextField id='standard-basic' label='DEP E/W' name='tew' value={data.tew || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-                <Grid item xs={3}>
-                  <TextField id='standard-basic' label='VS' name='tvs' value={data.tvs || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-                <Grid item xs={3}>
-                  <TextField id='standard-basic' label='Radius' name='trad' value={data.trad || ''} onChange={handleChange} variant='standard' style={style.formInput} />
-                </Grid>
-              </Grid>
-              {!props.initialData
-                ? <Grid container style={style.formFooter}>
-                    <Button variant='contained' onClick={handleSubmit} style={style.formButton}>Create Well</Button>
-                  </Grid>
-                : <Grid container style={style.formFooter}>
-                    <Button variant='contained' onClick={handleDelete} color='error' style={style.formButton}>Delete Well</Button>
-                    <Button variant='contained' onClick={handleUpdate} style={style.formButton}>Update Well</Button>
-                  </Grid>
-              }
-            </FormControl>
+            {renderForm()}
           </Box>
         </Box>
       </Modal>

@@ -5,7 +5,7 @@ import Layout from './pages/Layout';
 import Dashboard from './pages/Dashboard/Index';
 import Well from './pages/Well/Index';
 import Wells from './pages/Wells/Index';
-import Survey from './pages/Survey/Index';
+// import Survey from './pages/Survey/Index';
 import Slide from './pages/Slide/Index';
 
 

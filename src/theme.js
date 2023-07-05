@@ -1,68 +1,281 @@
 import { createTheme } from '@mui/material/styles';
 
+// Light Theme
 const lightTheme = createTheme({
-
-});
-
-const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
     primary: {
-      main: '#191C24',
-      secondary: '#AF1763' // Replace with your primary color
+      main: '#212121',
     },
     secondary: {
-      main: '#0D6EFD',
-      secondary: '#198754',
-      third: '#0DCAf0',
-      fourth: '#AB2E3C',
-      fifth: '#FFC107', // Replace with your secondary color
+      main: '#007BFF',
+    },
+    success: {
+      main: '#33ad0e',
+    },
+    warning: {
+      main: '#0DCAF0',
+    },
+    error: {
+      main: '#e32012'
+    },
+    info: {
+      main: '#17A2B8',
     },
     background: {
-      default: '#1F2B3A',
+      default: '#F3F3F3',
+      paper: '#FFFFFF',
+    },
+    text: {
+      primary: 'rgba(0, 0, 0, 0.87)',
+      secondary: 'rgba(0, 0, 0, 0.6)',
+      disabled: 'rgba(0, 0, 0, 0.38)',
+    },
+    divider: {
+      divider: 'rgba(0, 0, 0, 0.12)',
+    },
+    action: {
+      active: 'rgba(0, 0, 0, 0.54)',
+      hover: 'rgba(0, 0, 0, 0.4)',
+      selected: 'rgba(0, 0, 0, 0.87)',
+      disabled: 'rgba(0, 0, 0, 0.26)',
+      disabledBackground: 'rgba(0, 0, 0, 0.12)',
     }
-    // Customize other palette options for dark mode
-  },
-  typography: {
-    h1: {
-      fontSize: '2rem',
-      fontWeight: 'bold',
-      // Customize other heading styles for dark mode
-    },
-    button: {
-      textTransform: 'none',
-      // Customize button styles for dark mode
-    },
-    // Customize other typography styles for dark mode
   },
   components: {
-    MuiButton: {
+    MuiBox: {
       styleOverrides: {
+        // Light theme styles for Box component
         root: {
-          borderRadius: '8px',
-          // Customize button component styles for dark mode
+          // Add your Box styles here
         },
       },
     },
-    MuiIcon: {
+    MuiDivider: {
       styleOverrides: {
+        // Light theme styles for Divider component
         root: {
-          fontSize: '1.5rem',
-          // Customize icon component styles for dark mode
+          // Add your Divider styles here
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        // Light theme styles for Drawer component
+        paper: {
+          // Add your Drawer styles here
+        },
+      },
+    },
+    MuiList: {
+      styleOverrides: {
+        // Light theme styles for List component
+        root: {
+          // Add your List styles here
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        // Light theme styles for ListItemButton component
+        root: {
+          // Add your ListItemButton styles here
+        },
+      },
+    },
+    MuiListItemIcon: {
+      styleOverrides: {
+        // Light theme styles for ListItemIcon component
+        root: {
+          // Add your ListItemIcon styles here
+          color: ''
+        },
+      },
+    },
+    MuiListItemText: {
+      styleOverrides: {
+        // Light theme styles for ListItemText component
+        root: {
+          // Add your ListItemText styles here
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        // Light theme styles for Toolbar component
+        root: {
+          // Add your Toolbar styles here
         },
       },
     },
     MuiTypography: {
       styleOverrides: {
-        paragraph: {
-          marginBottom: '1rem',
-          // Customize paragraph component styles for dark mode
+        // Light theme styles for Typography component
+        root: {
+          // Add your Typography styles here
         },
       },
     },
-    // Customize other components styles for dark mode
+    MuiAppBar: {
+      styleOverrides: {
+        // Light theme styles for AppBar component
+        root: {
+          // Add your AppBar styles here
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        // Light theme styles for Button component
+        root: {
+          // Add your Button styles here
+        },
+      },
+    },
   },
-  // Customize other options for dark mode
+});
+
+// Dark Theme
+const darkTheme = createTheme({
+  palette: {
+    type: 'dark',
+    primary: {
+      main: '#F3F3F3',
+    },
+    secondary: {
+      main: '#007BFF',
+    },
+    success: {
+      main: '#0D6EFD',
+    },
+    warning: {
+      main: '#198754',
+    },
+    info: {
+      main: '#0DCAF0',
+    },
+    error: {
+      main: '#AB2E3C',
+    },
+    background: {
+      default: '#121212',
+      paper: 'rgba(32, 32, 32, 1)',
+    },
+    text: {
+      primary: '#FFFFFF',
+      secondary: 'rgba(255, 255, 255, 0.7)',
+      disabled: 'rgba(255,255,255, 0.5)',
+    },
+    divider: {
+      divider: 'rgba(255, 255, 255, 0.12)',
+    },
+    action: {
+      active: '#FFFFFF',
+      hover: 'rgba(255, 255, 255, 0.08)',
+      selected: 'rgba(255, 255, 255, 0.16)',
+      disabled: 'rgba(255, 255, 255, 0.3)',
+      disabledBackground: 'rgba(255, 255, 255, 012)',
+    }
+  },
+  components: {
+    // Same components as light theme, but with dark theme styles
+    MuiBox: {
+      styleOverrides: {
+        // Dark theme styles for Box component
+        root: {
+          // Add your Box styles here
+        },
+      },
+    },
+    MuiDivider: {
+      styleOverrides: {
+        // Dark theme styles for Divider component
+        root: {
+          // Add your Divider styles here
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        // Dark theme styles for Drawer component
+        paper: {
+          // Add your Drawer styles here
+        },
+      },
+    },
+    MuiList: {
+      styleOverrides: {
+        // Dark theme styles for List component
+        root: {
+          // Add your List styles here
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        // Dark theme styles for ListItemButton component
+        root: {
+          // Add your ListItemButton styles here
+          color: '#FFFFFF'
+        },
+      },
+    },
+    MuiListItemIcon: {
+      styleOverrides: {
+        // Dark theme styles for ListItemIcon component
+        root: {
+          // Add your ListItemIcon styles here
+          color: '#FFFFFF'
+        },
+      },
+    },
+    MuiListItemText: {
+      styleOverrides: {
+        // Dark theme styles for ListItemText component
+        root: {
+          // Add your ListItemText styles here
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        // Dark theme styles for Toolbar component
+        root: {
+          // Add your Toolbar styles here
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        // Dark theme styles for Typography component
+        root: {
+          // Add your Typography styles here
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        // Dark theme styles for AppBar component
+        root: {
+          // Add your AppBar styles here
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        // Dark theme styles for Button component
+        root: {
+          // Add your Button styles here
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          textDecoration: 'none',
+        }
+      }
+    }
+  },
 });
 
 export { lightTheme, darkTheme };

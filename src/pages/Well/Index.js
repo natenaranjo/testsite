@@ -1,10 +1,12 @@
-import {  } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import React from 'react';
 
 const Well = () => {
   return (
-    <div>Well</div>
+    <Box sx={{ display: 'flex', height: '90%' }}>
+      
+    </Box>
   )
-}
+};
 
-export default Well
+export default Well;
