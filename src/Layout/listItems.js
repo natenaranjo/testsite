@@ -16,21 +16,21 @@ export const mainListItems = (
   <React.Fragment>
     <ListItemButton href='/'>
       <ListItemIcon>
-        <DashboardIcon />
+        <DashboardIcon color='primary' sx={{ fontSize: 24 }} />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <Typography variant='h4' color='text'>Dashboard</Typography>
     </ListItemButton>
     <ListItemButton href='/wells'>
       <ListItemIcon>
-        <TableViewIcon />
+        <TableViewIcon color='primary' sx={{ fontSize: 24 }} />
       </ListItemIcon>
-      <ListItemText primary="Wells" />
+      <Typography variant='h4' color='text'>Wells</Typography>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <PeopleIcon />
+        <PeopleIcon color='primary' sx={{ fontSize: 24 }} />
       </ListItemIcon>
-      <ListItemText primary="Clients" />
+      <Typography variant='h4' color='text'>Clients</Typography>
     </ListItemButton>
   </React.Fragment>
 );
@@ -38,25 +38,25 @@ export const mainListItems = (
 export const secondaryListItems = (
   <React.Fragment>
     <ListSubheader component="div" inset>
-      <Typography variant='h6' component='h6' >Reports</Typography>
+      <Typography variant='h3' component='h3' color='primary' sx={{ fontSize: 24 }} >Reports</Typography>
     </ListSubheader>
     <ListItemButton>
       <ListItemIcon>
-        <BarChartIcon />
+        <BarChartIcon color='primary' sx={{ fontSize: 24 }} />
       </ListItemIcon>
-      <ListItemText primary="Shift Report" />
+      <Typography variant='h4' color='text'>Shift Report</Typography>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <BarChartIcon />
+        <BarChartIcon color='primary' sx={{ fontSize: 24 }} />
       </ListItemIcon>
-      <ListItemText primary="Daily Report" />
+      <Typography variant='h4' color='text'>Daily Report</Typography>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <BarChartIcon />
+        <BarChartIcon color='primary' sx={{ fontSize: 24 }} />
       </ListItemIcon>
-      <ListItemText primary="Passdown Notes" />
+      <Typography variant='h4' color='text'>Passdown Notes</Typography>
     </ListItemButton>
   </React.Fragment>
 );

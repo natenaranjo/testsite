@@ -1,4 +1,4 @@
-import { lightTheme, darkTheme } from '../theme';
+import { lightTheme, darkTheme } from '../themes/theme';
 import { CssBaseline, styled, ThemeProvider } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
@@ -15,7 +15,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import WifiIcon from '@mui/icons-material/Wifi';
 import React, { useEffect, useState } from 'react'
-import { mainListItems, secondaryListItems } from './Dashboard/listItems';
+import { mainListItems, secondaryListItems } from './listItems';
 
 
 function Copyright(props) {
@@ -118,6 +118,7 @@ const Layout = ({ children }) => {
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
+              backgroundColor: 'background.main'
             }}
           >
             <IconButton
@@ -130,22 +131,21 @@ const Layout = ({ children }) => {
                 ...(open && { display: 'none' }),
               }}
             >
-              <MenuIcon />
+              <MenuIcon style={{ fontSize: 20}} />
             </IconButton>
             <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
+              variant="h1"
+              color="text"
               noWrap
               sx={{ flexGrow: 1 }}
             >
               Slide Seen
             </Typography>
-            <WifiIcon color={isOnline ? 'success' : 'error'} sx={{ marginRight: 2 }} />
+            <WifiIcon color={isOnline ? 'text' : 'error'} sx={{ marginRight: 2, fontSize: 26 }} />
             <IconButton color="inherit" onClick={toggleTheme}>
               {theme === 'light'
-                ? <LightModeIcon />
-                : <ModeNightIcon />
+                ? <LightModeIcon color='text' sx={{ fontSize: 26 }} />
+                : <ModeNightIcon colort='text' sx={{ fontSize: 26 }} />
               }
             </IconButton>
           </Toolbar>
@@ -160,7 +160,7 @@ const Layout = ({ children }) => {
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon color='primary' />
+              <ChevronLeftIcon color='primary' style={{ fontSize: 30 }} />
             </IconButton>
           </Toolbar>
           <Divider />

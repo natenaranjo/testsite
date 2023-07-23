@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Breadcrumbs, Button, Divider, Link, Modal, Stack} from '@mui/material';
 import FormWellDetails from './FormWellDetails';
 import FormTyendDetails from './FormTyendDetails';
+import FormSuccess from './FormSuccess';
 
 const style = {
   position: 'absolute',
@@ -115,10 +116,10 @@ const WellModalB = (props) => {
 
       case 3:
         return (
-          <>
-            <h2>Step 3</h2>
-            <button onClick={previousStep}>Previous Step</button>
-          </>
+          <FormSuccess
+            nextStep={nextStep}
+            previousStep={previousStep}
+          />
         );
 
       default: break;
@@ -136,7 +137,7 @@ const WellModalB = (props) => {
         <Box sx={style}>
           <Box style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
           <Stack spacing={2}>
-            <Breadcrumbs separator="›" aria-label="breadcrumb">
+            <Breadcrumbs separator="›" aria-label="breadcrumb" style={{ fontSize: '1rem'}}>
               {breadcrumbs}
             </Breadcrumbs>
           </Stack>

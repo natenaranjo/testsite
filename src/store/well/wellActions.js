@@ -1,3 +1,5 @@
+import { showSnackbar } from '../ui/uiAction';
+
 import {
   FETCH_WELLS_REQUEST,
   FETCH_WELLS_SUCCESS,
@@ -82,6 +84,7 @@ export const fetchWells = () => (dispatch) => {
     getAllRequest.onsuccess = () => {
       const wells = getAllRequest.result;
       dispatch(fetchWellsSuccess(wells));
+      dispatch(showSnackbar('Successfully fetched wells from database!', 'success', 5000));
     };
 
     getAllRequest.onerror = () => {
@@ -105,8 +108,9 @@ export const createWell = (well) => (dispatch) => {
 
     const addRequest = wellStore.add(well);
 
-    addRequest.onsuccess = () => {
-      dispatch(createWellSuccess());
+    addRequest.onsuccess = (event) => {
+      const createdWellId = event.target.result;
+      dispatch(createWellSuccess(createdWellId));
     };
 
     addRequest.onerror = () => {

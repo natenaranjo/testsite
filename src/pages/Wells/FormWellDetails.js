@@ -9,6 +9,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 800,
+  color: 'text.primary',
   bgcolor: 'background.paper',
   borderRadius: '10px',
   boxShadow: 24,
@@ -23,6 +24,7 @@ const style = {
   formInput: {
     width: '100%',
     padding: 5,
+    color: 'text.primary'
   },
   formTitle: {
     padding: 1,
@@ -95,7 +97,7 @@ export default function FormWellDetails(props) {
                 </Grid>
               </Grid>
 
-              <Typography variant='h6' component='h6' style={ style.formTitle }>
+              <Typography variant='h4' component='h4' style={ style.formTitle }>
                 Target Information
               </Typography>
               <Grid container spacing={2} style={style.formGrid}>
@@ -127,7 +129,7 @@ export default function FormWellDetails(props) {
                   <TextField id='standard-basic' label='Radius' name='trad' value={data.trad || ''} onChange={handleChange} variant='standard' style={style.formInput} />
                 </Grid>
               </Grid>
-              <Typography variant='h6' component='h6' style={ style.formTitle }>
+              <Typography variant='h4' component='h4' style={ style.formTitle }>
                 Final Depth of each Well Section
               </Typography>
               <Grid container spacing={4} style={style.formGrid}>

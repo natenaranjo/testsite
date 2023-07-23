@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import uiReducer from './ui/uiReducer';
 import wellReducer from './well/wellReducer';
 import tyendReducer from './tyend/tyendReducer';
 // import surveyReducer from './survey/surveyReducer';
@@ -6,6 +7,7 @@ import tyendReducer from './tyend/tyendReducer';
 
 
 const rootReducer = combineReducers({
+  ui: uiReducer,
   well: wellReducer,
   tyend: tyendReducer,
   // survey: surveyReducer,
